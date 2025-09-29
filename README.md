@@ -141,3 +141,76 @@ This project relies on several open source libraries and packages:
 - **collections** - Specialized container datatypes
 
 All external dependencies are optional and the script will gracefully degrade functionality when they are not available, falling back to file system timestamps for date information.
+
+## Testing
+
+This project includes a comprehensive test suite with both unit tests and integration tests.
+
+### Running Tests
+
+```bash
+# Install testing dependencies
+pip install -r requirements.txt
+
+# Run all tests
+pytest
+
+# Run with verbose output
+pytest -v
+
+# Run with code coverage report
+pytest --cov=photo_renamer --cov-report=term-missing
+
+# Run only unit tests (fast, uses mocks)
+pytest test_photo_renamer.py
+
+# Run only integration tests (uses real test files)
+pytest test_integration.py
+
+# Run a specific test class
+pytest test_integration.py::TestRealFileMetadataExtraction -v
+```
+
+### Test Organization
+
+The test suite is organized into three main files:
+
+#### `conftest.py`
+Contains pytest fixtures and test helpers:
+- Temporary directory fixtures for safe file operations
+- Mock EXIF and video metadata structures
+- Factory fixtures for creating test files with specific timestamps
+- Real test file fixtures that copy from the `TestFiles/` directory
+
+#### `test_photo_renamer.py` - Unit Tests (32 tests)
+Mock-based tests for fast, isolated testing:
+- **Date Extraction Tests** - EXIF reading, video metadata parsing, fallback logic
+- **File Discovery Tests** - Finding media files, extension filtering, recursive search
+- **Renaming Logic Tests** - Filename generation, sequential numbering, collision handling
+- **Edge Cases Tests** - Empty directories, nonexistent paths, dry-run mode
+- **Recursive Processing Tests** - Nested directory handling
+
+#### `test_integration.py` - Integration Tests (14 tests)
+Tests using real media files from the `TestFiles/` directory:
+- **Real File Metadata Extraction** - Validates EXIF and video metadata reading on actual files
+- **Real File Renaming** - Tests actual file operations in safe temporary directories
+- **Real World Scenarios** - Simulates typical usage patterns like processing phone exports
+
+### Test Coverage
+
+The test suite provides **63% code coverage** of the main script, covering:
+- All major metadata extraction paths
+- File discovery and filtering logic
+- Renaming logic and collision handling
+- Chronological ordering
+- Recursive directory processing
+- Dry-run mode
+- Edge cases and error conditions
+
+### Testing Dependencies
+
+- **pytest** (`>=7.4.0`) - Test framework
+- **pytest-cov** (`>=4.1.0`) - Code coverage reporting
+- **pytest-mock** (`>=3.11.1`) - Mocking support
+
+These are automatically installed when you run `pip install -r requirements.txt`.

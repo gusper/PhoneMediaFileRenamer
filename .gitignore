@@ -47,6 +47,14 @@ venv.bak/
 ehthumbs.db
 Thumbs.db
 
+# Testing
+.pytest_cache/
+htmlcov/
+.coverage
+*.cover
+.hypothesis/
+.tox/
+
 # LLM files and directories
 .claude/
 *.claude.md

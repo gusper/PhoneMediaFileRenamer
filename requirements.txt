@@ -3,3 +3,8 @@ Pillow>=10.0.0
 # Optional: FFmpeg (for video file metadata extraction)
 # Install from: https://ffmpeg.org/download.html
 # Required for processing .mov, .mp4, .avi, .mkv, .m4v, .3gp, .wmv files
+
+# Testing dependencies
+pytest>=7.4.0
+pytest-cov>=4.1.0
+pytest-mock>=3.11.1
